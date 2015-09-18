@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Banana App</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
+		<link rel="stylesheet" href="./vendor/waves/waves.min.css" />
+		<link rel="stylesheet" href="./css/nativedroid2.css" />
+		<link rel="stylesheet" href="./css/nativedroid2.color.green.css" />
+		<style>
+			/* Prevent FOUC */
+			body { opacity: 0; }
+		</style>
+	</head>
+	<body>
+
+		<div data-role="page">
+		    <nd2-include data-src="./_00panel.left.html"></nd2-include>
+			<div data-role="header" data-position="fixed">
+				<a href="#leftpanel" class="ui-btn ui-btn-left"><i class="zmdi zmdi-menu"></i></a>
+				<h1>
+					<img src="./images/vote_logo.jpg" style="max-width:30px;margin-top:5px;margin-right:10px;position:absolute;"/>
+					&nbsp; &nbsp; &nbsp; &nbsp; Myanmar Vote App
+				</h1>
+			</div>
+
+			<div role="main" class="ui-content" data-inset="false">
+
+				<div class="nd2-card">
+					<div class="card-media">
+						<img src="./images/myanmar_language.jpg">
+					</div>
+					<div class="card-supporting-text has-action" style="text-align:center;">
+						<h2>ျမန္မာစာ</h2>
+					</div>
+
+					<div class="card-action">
+						<div class="row between-xs">
+							<div class="col-xs-6">
+								<div class="box">
+									<a href="./_03_myanmar.html" class="ui-btn">Yes</a>
+								</div>
+							</div>
+							<div class="col-xs-6">
+								<div class="box">
+									<a href="./_03_myanmar.html" class="ui-btn">No</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+		<script src="./vendor/waves/waves.min.js"></script>
+		<script src="./js/nativedroid2.js"></script>
+		<script src="./nd2settings.js"></script>
+	</body>
+</html>

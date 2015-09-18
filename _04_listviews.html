@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Banana App</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./vendor/waves/waves.min.css" />
+    <link rel="stylesheet" href="./vendor/wow/animate.css" />
+    <link rel="stylesheet" href="./css/nativedroid2.css" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    /* Prevent FOUC */
+    body { opacity: 0; }
+    </style>
+</head>
+<body>
+<div data-role="page">
+    <nd2-include data-src="./_00panel.left.html"></nd2-include>
+    <div data-role="header" data-position="fixed" class="wow fadeIn">
+        <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-menu"></i></a>
+        <h1 class="wow fadeIn" data-wow-delay='0.4s'>Candidate</h1>
+    </div>
+    <div role="main" class="ui-content wow fadeIn" data-inset="false" data-wow-delay="0.2s">
+        <ul data-role="listview" data-icon="false" id="profiles">
+            <li data-role="list-divider">
+                Candidate
+            </li>
+        </ul>
+        <div class="col-xs-4 col-xs-offset-4">
+            <div class="box" style="text-align:center;">
+                <a href="#" class="ui-btn">Load More</a>
+            </div>
+        </div>
+    
+    </div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
+<script type="text/template" id="profileTemplate">
+    <li>
+        <a href="#">
+            <img src="<%= photo_url %>" class="ui-thumbnail ui-thumbnail-circular" style="max-width:80px;"/>
+            <h2><%= name %></h2>
+            <p><%= occupation %></p>
+        </a>
+    </li>
+</script>
+<script>
+$(function(){
+    startData = _.jsonSample;
+    var Profile = Backbone.Model.extend();
+    var ProfileList = Backbone.Collection.extend(
+        {
+            model: Profile,
+            url: function() {
+                return 'http://api.maepaysoh.org/candidate/list?token=45bf2319-a0de-5259-821b-921e3ef286c0';
+            },
+            parse: function(response) {
+                return response.results;
+            },
+            sync: function(method, model, options) {
+                var that = this;
+                var params = _.extend({
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    url: that.url(),
+                    processData: false
+                }, options);
+                return $.ajax(params);
+            }
+        }
+    );
+    var ProfileView = Backbone.View.extend({
+        el: "#profiles",
+        template: _.template($('#profileTemplate').html()),
+        initialize: function(){
+            this.listenTo(this.collection,"add", this.renderItem);
+        },
+        render: function(){
+            this.collection.each(function(model){
+                var profileTemplate = this.template(model.toJSON());
+                this.$el.append(profileTemplate);
+                $( "#profiles" ).listview( "refresh" );
+            }, this);
+            return this;
+        },
+        renderItem: function(profile){
+            var profileTemplate = this.template(profile.toJSON());
+            this.$el.append(profileTemplate);
+        }
+    });
+    $.getJSON( "http://api.maepaysoh.org/candidate/list?token=45bf2319-a0de-5259-821b-921e3ef286c0", function(json) {
+        var profileList = new ProfileList(json.data);
+        var profilesView = new ProfileView({ collection: profileList });
+        profilesView.render();
+    });
+});
+</script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+        <script src="./vendor/waves/waves.min.js"></script>
+        <script src="./vendor/wow/wow.min.js"></script>
+        <script src="./js/nativedroid2.js"></script>
+        <script src="./nd2settings.js"></script>
+
+    </body>
+</html>
